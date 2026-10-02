@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Finanças Pessoais</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <strong>💰 Finanças Pessoais</strong>
+    <div>
+      <span id="nome-usuario"></span>
+      <button id="btn-logout">Sair</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="nav-mes">
+      <button type="button" id="mes-anterior" title="Mês anterior">◀</button>
+      <h2 id="periodo"></h2>
+      <button type="button" id="mes-proximo" title="Próximo mês">▶</button>
+      <button type="button" id="mes-atual" class="hoje">Hoje</button>
+    </div>
+    <p id="aviso" class="aviso"></p>
+
+    <section class="cartoes">
+      <div class="cartao"><span>Renda mensal</span><strong id="card-renda">-</strong></div>
+      <div class="cartao"><span>Total gasto</span><strong id="card-gasto">-</strong></div>
+      <div class="cartao"><span>Saldo disponível</span><strong id="card-saldo">-</strong></div>
+      <div class="cartao"><span>Renda utilizada</span><strong id="card-percentual">-</strong></div>
+    </section>
+
+    <section class="painel">
+      <h3>Alertas</h3>
+      <ul id="lista-alertas" class="alertas"></ul>
+    </section>
+
+    <section class="painel">
+      <h3>🤖 Assistente Financeiro</h3>
+      <div id="chat-mensagens" class="chat-mensagens"></div>
+      <div id="chat-opcoes" class="chat-opcoes"></div>
+    </section>
+
+    <section class="painel">
+      <h3>Planejado x realizado</h3>
+      <div id="comparativo"></div>
+      <p id="comparativo-vazio" class="vazio hidden">Crie categorias para acompanhar seus gastos.</p>
+    </section>
+
+    <section class="painel">
+      <h3>Despesas do mês</h3>
+      <form id="form-despesa" class="linha">
+        <input type="hidden" id="desp-id">
+        <input type="text" id="desp-descricao" placeholder="Descrição" maxlength="100" required>
+        <input type="number" id="desp-valor" placeholder="Valor (R$)" step="0.01" min="0.01" required>
+        <input type="date" id="desp-data" required>
+        <select id="desp-categoria" required></select>
+        <button type="submit" id="btn-salvar-desp">Adicionar</button>
+        <button type="button" id="btn-cancelar-desp" class="secundario hidden">Cancelar</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr><th>Data</th><th>Descrição</th><th>Categoria</th><th>Valor</th><th>Ações</th></tr>
+        </thead>
+        <tbody id="tabela-despesas"></tbody>
+      </table>
+      <p id="despesas-vazio" class="vazio hidden">Nenhuma despesa neste mês.</p>
+    </section>
+
+    <section class="painel">
+      <h3>Renda mensal</h3>
+      <form id="form-renda" class="linha">
+        <input type="number" id="renda-valor" placeholder="Ex.: 3000.00" step="0.01" min="0" required>
+        <button type="submit">Salvar renda</button>
+      </form>
+      <p>Renda atual: <strong id="renda-atual">não informada</strong></p>
+    </section>
+
+    <section class="painel">
+      <h3>Categorias e limites</h3>
+      <form id="form-categoria" class="linha">
+        <input type="hidden" id="cat-id">
+        <input type="text" id="cat-nome" placeholder="Nome da categoria" maxlength="50" required>
+        <input type="number" id="cat-limite" placeholder="Limite (R$)" step="0.01" min="0" required>
+        <button type="submit" id="btn-salvar-cat">Adicionar</button>
+        <button type="button" id="btn-cancelar" class="secundario hidden">Cancelar</button>
+      </form>
+      <button type="button" id="btn-padrao" class="secundario">Criar categorias padrão</button>
+
+      <table>
+        <thead>
+          <tr><th>Categoria</th><th>Limite</th><th>% da renda</th><th>Ações</th></tr>
+        </thead>
+        <tbody id="tabela-categorias"></tbody>
+      </table>
+      <p id="vazio" class="vazio hidden">Nenhuma categoria ainda.</p>
+
+      <div class="resumo">
+        <p>Total dos limites: <strong id="total-limites">R$ 0,00</strong></p>
+        <p>Renda ainda não distribuída: <strong id="nao-distribuido">R$ 0,00</strong></p>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/dashboard.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar - Finanças Pessoais</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+  <main class="card">
+    <h1>💰 Finanças Pessoais</h1>
+
+    <div class="tabs">
+      <button id="tab-login" class="active">Entrar</button>
+      <button id="tab-register">Criar conta</button>
+    </div>
+
+    <form id="form-login">
+      <input type="email" id="login-email" placeholder="E-mail" required>
+      <input type="password" id="login-senha" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <form id="form-register" class="hidden">
+      <input type="text" id="reg-nome" placeholder="Nome" required>
+      <input type="email" id="reg-email" placeholder="E-mail" required>
+      <input type="password" id="reg-senha" placeholder="Senha (mín. 6 caracteres)" required>
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <p id="mensagem" class="mensagem"></p>
+  </main>
+  <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Finanças Pessoais</title>
+</head>
+<body>
+  <p>Carregando...</p>
+  <script>
+    fetch('/api/user').then((r) => {
+      window.location.href = r.ok ? 'dashboard.html' : 'login.html';
+    });
+  </script>
+</body>
+</html>
