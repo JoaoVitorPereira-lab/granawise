@@ -6,12 +6,13 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test": "jest --runInBand",
+    "test:coverage": "jest --coverage --runInBand"
   },
   "jest": {
     "testEnvironment": "node",
     "setupFiles": ["<rootDir>/tests/setup.js"],
+    "setupFilesAfterEnv": ["<rootDir>/tests/teardown.js"],
     "verbose": true
   },
   "keywords": [],
