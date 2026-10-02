@@ -2,10 +2,16 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-const dbDir = path.join(__dirname, '..', '..', '..', 'database');
-if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
+// Nos testes, DB_PATH=':memory:' cria um banco temporário que some ao final.
+// Em uso normal, a variável não existe e o arquivo database/financeiro.db é usado.
+let caminhoDoBanco = process.env.DB_PATH;
+if (!caminhoDoBanco) {
+  const dbDir = path.join(__dirname, '..', '..', '..', 'database');
+  if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
+  caminhoDoBanco = path.join(dbDir, 'financeiro.db');
+}
 
-const db = new Database(path.join(dbDir, 'financeiro.db'));
+const db = new Database(caminhoDoBanco);
 db.pragma('foreign_keys = ON');
 
 db.exec(`

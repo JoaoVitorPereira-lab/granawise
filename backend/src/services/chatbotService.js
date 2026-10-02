@@ -10,7 +10,7 @@ function formatarData(iso) {
   return `${d}/${m}/${a}`;
 }
 
-const SAUDACAO = 'Olá! Sou o assistente financeiro. Como posso ajudar?';
+const SAUDACAO = 'Olá! Sou o assistente do GranaWise. Como posso ajudar?';
 const SEM_RENDA =
   'Você ainda não informou a renda deste mês. Informe-a no painel "Renda mensal" para eu calcular isso.';
 const SEM_CATEGORIAS =

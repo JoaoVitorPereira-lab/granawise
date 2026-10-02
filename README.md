@@ -1,10 +1,14 @@
-# Sistema de Gerenciamento e Organização Financeira Pessoal
+# GranaWise
 
-Projeto acadêmico. O usuário informa a renda do mês, define limites por categoria,
-registra despesas e acompanha o saldo, os alertas e um assistente (chatbot por regras).
+![CI](https://github.com/JoaoVitorPereira-lab/granawise/actions/workflows/ci.yml/badge.svg)
+
+Sistema de Gerenciamento e Organização Financeira Pessoal. Projeto acadêmico.
+O usuário informa a renda do mês, define limites por categoria, registra despesas
+e acompanha o saldo, os alertas e um assistente (chatbot por regras).
 
 ## Funcionalidades
 - Cadastro, login e logout (senha com hash, sessão por cookie httpOnly)
+- Limite de 5 tentativas de login por IP e e-mail a cada 15 minutos
 - Renda mensal e categorias com limite
 - Despesas (criar, editar, apagar) com data e categoria
 - Dashboard: renda, total gasto, saldo, % da renda usada, planejado x realizado
@@ -14,15 +18,17 @@ registra despesas e acompanha o saldo, os alertas e um assistente (chatbot por r
 
 ## Stack
 HTML, CSS e JavaScript (frontend) · Node.js + Express (API REST) · SQLite (better-sqlite3)
-bcryptjs (hash) · jsonwebtoken (sessão)
+bcryptjs (hash) · jsonwebtoken (sessão) · Jest + Supertest (testes) · GitHub Actions (CI)
 
 ## Arquitetura
 Usuário → Frontend → Rotas → Controllers → Services (regras de negócio) → SQLite
 
 ```
 backend/src/   routes/ controllers/ services/ middleware/ database/ utils/
+backend/tests/ unit/ integration/
 frontend/      login.html dashboard.html css/ js/
 database/      financeiro.db (criado automaticamente)
+.github/       workflows/ci.yml
 ```
 
 ## Como executar
@@ -42,6 +48,19 @@ Inicie:
 npm run dev
 ```
 Acesse http://localhost:3000
+
+## Testes
+Os testes usam um banco SQLite em memória, então o `financeiro.db` nunca é alterado.
+
+```bash
+cd backend
+npm test                 # roda todos os testes
+npm run test:coverage    # relatório de cobertura
+```
+- `tests/unit`: validadores, períodos e regras de alerta
+- `tests/integration`: autenticação, finanças, isolamento entre usuários e chatbot
+
+A cada push ou pull request na `main`, o GitHub Actions instala o projeto e roda os testes.
 
 ## Endpoints (todos, exceto register/login/logout, exigem login)
 | Método | Rota | Descrição |
@@ -75,8 +94,11 @@ Rotas de dados aceitam `?mes=MM&ano=AAAA` (padrão: mês atual).
 
 ## Segurança
 Senhas com bcrypt · cookie httpOnly (secure em produção) · SQL parametrizado ·
-`usuario_id` em todas as consultas · validação no backend · saída com `textContent` (XSS)
+`usuario_id` em todas as consultas · validação no backend · saída com `textContent` (XSS) ·
+limite de tentativas de login
 
 ## Limitações conhecidas
-Sem recuperação de senha, 2FA ou login social. Sem limite de tentativas de login.
-SQLite e execução local; hospedagem exigiria disco persistente ou PostgreSQL.
+- Sem recuperação de senha, 2FA ou login social.
+- O limite de tentativas de login fica em memória e reinicia com o servidor.
+- Sem testes automatizados de interface (frontend).
+- SQLite e execução local; hospedagem exigiria disco persistente ou PostgreSQL.
